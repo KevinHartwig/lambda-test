@@ -6,6 +6,8 @@ phases:
       - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
       - unzip awscliv2.zip
       - ./aws/install
+      - aws --version
+      - /usr/local/bin/aws --version
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
@@ -23,4 +25,4 @@ phases:
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
     finally:
       - echo Deploying function $FUNCTION_NAME
-      - aws lambda update-function-code --function-name $FUNCTION_NAME --image_url $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME
+      - /usr/local/bin/aws lambda update-function-code --function-name $FUNCTION_NAME --image_url $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME
